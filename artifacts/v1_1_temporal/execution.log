@@ -1,0 +1,17 @@
+Input rows: 819126
+Input path: C:\Users\sarva\OneDrive\Desktop\Codes\Major Project\Major-Project\data\cic_preprocessed.csv
+Timestamp format: %d/%m/%Y %H:%M:%S; window duration: 30 minutes; alignment: half-open floor
+Excluded from model features: ['Dst IP', 'Flow ID', 'Label', 'Src IP', 'Timestamp', '_Parsed Timestamp']
+Invalid or missing timestamps: 0 (0.0000%)
+Suspicious timestamps before 2000-01-01: 5 (not excluded)
+Rows removed during preprocessing: 0
+Final usable rows: 819126
+Windows: 25
+Partition boundaries: train through window-000021; validation through window-000023
+train: 603385 records, 21 windows, 475194 benign, 128191 attack
+validation: 129091 records, 2 windows, 104958 benign, 24133 attack
+test: 86650 records, 2 windows, 82306 benign, 4344 attack
+train metrics: accuracy=0.9995757269405107, precision=0.9980457344846111, recall=0.9999609957017264, f1=0.9990024471219041, roc_auc=0.9999925694396152, pr_auc=0.9999291360231535
+validation metrics: accuracy=0.999666901643027, precision=0.9982213765718068, recall=1.0, f1=0.9991098967066178, roc_auc=0.999995098208386, pr_auc=0.9999710149018031
+test metrics: accuracy=0.9995614541257934, precision=0.9913281606572342, recall=1.0, f1=0.9956451982580793, roc_auc=0.9999810033787134, pr_auc=0.9992434562841199
+Integrity assertions: passed
