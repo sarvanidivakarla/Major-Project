@@ -1,0 +1,25 @@
+# Python caches and local tooling
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local Python environments and secrets
+.venv/
+venv/
+env/
+.env
+.env.*
+
+# Large raw and generated datasets
+/data/*.csv
+
+# Trained model binaries and other generated binary artifacts
+/artifacts/**/*.joblib
+/artifacts/**/*.pkl
+/artifacts/**/*.pickle
+
+# Flask local runtime state
+instance/
+.flaskenv
