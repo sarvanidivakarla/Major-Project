@@ -19,6 +19,7 @@ env/
 /artifacts/**/*.joblib
 /artifacts/**/*.pkl
 /artifacts/**/*.pickle
+/artifacts/v2_random_forest/
 
 # Flask local runtime state
 instance/
