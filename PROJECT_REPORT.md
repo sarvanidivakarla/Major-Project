@@ -200,7 +200,48 @@ Additional measurements:
 - Removing duplicate rows may remove legitimate repeated network behavior as well as leakage-prone duplicates.
 - Very high metrics may still reflect the limited source data and structured nature of this dataset.
 
-## 5. Generated Files
+## 5. Cross-Version Metrics Comparison
+
+The following tables summarize the saved evaluation results for all three project versions. Version 1 and Version 1.1 use Logistic Regression. Version 2 uses Random Forest. `N/A` means that the protocol or metric was not run or was not saved for that version; it is not a zero.
+
+### Random Stratified 80/20 Test Results
+
+| Version | Model | Test records | Accuracy | Precision | Recall | F1-score | FPR | FNR | ROC-AUC | PR-AUC | Training seconds | Inference ms/record |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Version 1.0 | Logistic Regression | 208,951 | 99.9646% | 99.9043% | 99.9987% | 99.9515% | 0.0550% | N/A | N/A | 99.9990% | 7.60 | 0.00099 |
+| Version 1.1 | Logistic Regression | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
+| Version 2 | Random Forest | 163,826 | 100.0000% | 100.0000% | 100.0000% | 100.0000% | 0.0000% | 0.0000% | 100.0000% | 100.0000% | 27.57 | 0.00244 |
+
+Version 1.0 and Version 2 random-split results are not an exact like-for-like comparison because they use different dataset versions, feature schemas, and test records.
+
+### Chronological Temporal Test Results
+
+| Version | Model | Test records | Test windows | Accuracy | Precision | Recall | F1-score | FPR | FNR | ROC-AUC | PR-AUC | Training seconds | Inference ms/record |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Version 1.0 | Logistic Regression | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
+| Version 1.1 | Logistic Regression | 86,650 | 2 | 99.9561% | 99.1328% | 100.0000% | 99.5645% | 0.0462% | 0.0000% | 99.9981% | 99.9243% | 4.48 | 0.00075 |
+| Version 2 | Random Forest | 86,650 | 2 | 100.0000% | 100.0000% | 100.0000% | 100.0000% | 0.0000% | 0.0000% | 100.0000% | 100.0000% | 21.48 | 0.00246 |
+
+The Version 1.1 and Version 2 chronological test partitions have matching record counts and window boundaries because Version 2 recreated the documented 30-minute procedure on the same current preprocessed dataset. The previous Version 1.1 window audit file was unavailable, so exact file reuse was not claimed.
+
+### Training and Validation Metrics
+
+| Version | Protocol | Partition | Records | Accuracy | Precision | Recall | F1-score | FPR | FNR | ROC-AUC | PR-AUC |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Version 1.0 | Random 80/20 | Train | 835,800 | 99.9664% | N/A | 99.9987% | 99.9539% | N/A | N/A | N/A | N/A |
+| Version 1.0 | Random 80/20 | Test | 208,951 | 99.9646% | 99.9043% | 99.9987% | 99.9515% | 0.0550% | N/A | N/A | 99.9990% |
+| Version 1.1 | Temporal windows | Train | 603,385 | 99.9576% | 99.8046% | 99.9961% | 99.9002% | 0.0528% | 0.0039% | 99.9993% | 99.9929% |
+| Version 1.1 | Temporal windows | Validation | 129,091 | 99.9667% | 99.8221% | 100.0000% | 99.9110% | 0.0410% | 0.0000% | 99.9995% | 99.9971% |
+| Version 1.1 | Temporal windows | Test | 86,650 | 99.9561% | 99.1328% | 100.0000% | 99.5645% | 0.0462% | 0.0000% | 99.9981% | 99.9243% |
+| Version 2 | Random 80/20 | Train | 655,300 | 100.0000% | 100.0000% | 100.0000% | 100.0000% | 0.0000% | 0.0000% | 100.0000% | 100.0000% |
+| Version 2 | Random 80/20 | Test | 163,826 | 100.0000% | 100.0000% | 100.0000% | 100.0000% | 0.0000% | 0.0000% | 100.0000% | 100.0000% |
+| Version 2 | Temporal windows | Train | 603,385 | 100.0000% | 100.0000% | 100.0000% | 100.0000% | 0.0000% | 0.0000% | 100.0000% | 100.0000% |
+| Version 2 | Temporal windows | Validation | 129,091 | 100.0000% | 100.0000% | 100.0000% | 100.0000% | 0.0000% | 0.0000% | 100.0000% | 100.0000% |
+| Version 2 | Temporal windows | Test | 86,650 | 100.0000% | 100.0000% | 100.0000% | 100.0000% | 0.0000% | 0.0000% | 100.0000% | 100.0000% |
+
+The Random Forest has higher measured computational cost than the Logistic Regression baseline: approximately 27.57 seconds versus 7.60 seconds for the random-split runs, and 0.00246 ms versus 0.00075 ms per record on the temporal test partitions. These results should be interpreted with the dataset's limited temporal coverage and possible structural separability in mind.
+
+## 6. Generated Files
 
 ### Source and application files
 
@@ -220,7 +261,7 @@ Additional measurements:
 - `artifacts/v1_1_temporal/execution.log`
 - `artifacts/v1_1_temporal/logistic_attack_model_v1_1.joblib`
 
-## 6. Overall Conclusion
+## 7. Overall Conclusion
 
 Version 1 provides a strong random-split baseline, but its evaluation can be optimistic because similar or duplicate records can cross the train-test boundary. Version 1.1 improves the evaluation design by assigning complete chronological windows to contiguous train, validation, and test partitions.
 
