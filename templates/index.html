@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FlowGuard | Intrusion detector</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <p class="eyebrow">CICIDS · RANDOM FOREST</p>
+      <h1>FlowGuard</h1>
+      <p class="subtitle">Generate a network flow, inspect the model decision, and see which values influenced it.</p>
+    </header>
+
+    <section class="controls card">
+      <div>
+        <h2>Manual testing</h2>
+        <p class="muted">Use a realistic profile or let the app choose one at random.</p>
+      </div>
+      <div class="buttons">
+        <button data-profile="random" class="primary">Generate random flow</button>
+        <button data-profile="benign">Generate benign-like</button>
+        <button data-profile="attack">Generate attack-like</button>
+      </div>
+    </section>
+
+    <section id="result" class="result card empty">
+      <p class="muted">Generate a flow to see the prediction.</p>
+    </section>
+
+    <section class="card">
+      <div class="section-heading">
+        <div>
+          <h2>Original model accuracy</h2>
+          <p class="muted">Results reported when each project model was evaluated.</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Version</th>
+              <th>Model</th>
+              <th>Protocol</th>
+              <th>Partition</th>
+              <th>Records</th>
+              <th>Accuracy</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for result in model_accuracies %}
+            <tr>
+              <td>{{ result.version }}</td>
+              <td>{{ result.model }}</td>
+              <td>{{ result.protocol }}</td>
+              <td>{{ result.partition }}</td>
+              <td>{{ result.records }}</td>
+              <td class="accuracy">{{ result.accuracy }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">Source: <code>PROJECT_REPORT.md</code>, Cross-Version Metrics Comparison and Training and Validation Metrics.</p>
+    </section>
+
+    <section class="card">
+      <div class="section-heading">
+        <div>
+          <h2>Generated feature values</h2>
+          <p class="muted">These are the exact values sent to the model.</p>
+        </div>
+        <button id="toggle-values" class="text-button">Show all values</button>
+      </div>
+      <div id="values" class="values-grid"></div>
+    </section>
+  </main>
+  <script>
+    window.FEATURES = {{ features | tojson }};
+  </script>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

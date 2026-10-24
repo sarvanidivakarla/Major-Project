@@ -1,0 +1,69 @@
+:root {
+  color-scheme: dark;
+  --bg: #0b1020;
+  --card: #151c30;
+  --line: #293653;
+  --text: #edf2ff;
+  --muted: #93a0bd;
+  --accent: #67e8c2;
+  --danger: #ff7785;
+  --warning: #ffc86b;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 0%, #172848 0, var(--bg) 44%);
+  color: var(--text);
+  font: 15px/1.5 Inter, ui-sans-serif, system-ui, sans-serif;
+}
+.shell { width: min(1060px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 72px; }
+.hero { margin-bottom: 28px; }
+.eyebrow { color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .18em; margin: 0 0 10px; }
+h1 { font-size: clamp(42px, 8vw, 76px); letter-spacing: -.06em; line-height: .95; margin: 0; }
+h2 { font-size: 18px; margin: 0 0 5px; }
+.subtitle, .muted { color: var(--muted); }
+.subtitle { font-size: 17px; max-width: 620px; margin: 15px 0 0; }
+.card { background: rgba(21, 28, 48, .88); border: 1px solid var(--line); border-radius: 18px; padding: 24px; margin-top: 16px; box-shadow: 0 16px 50px rgba(0,0,0,.14); }
+.controls, .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.buttons { display: flex; flex-wrap: wrap; gap: 9px; justify-content: flex-end; }
+button { border: 1px solid var(--line); border-radius: 10px; color: var(--text); background: #202a45; cursor: pointer; font: inherit; padding: 10px 14px; transition: .15s ease; }
+button:hover { transform: translateY(-1px); border-color: var(--accent); }
+button:disabled { cursor: wait; opacity: .6; transform: none; }
+button.primary { background: var(--accent); color: #07151a; border-color: var(--accent); font-weight: 750; }
+.text-button { background: transparent; color: var(--accent); border: 0; padding: 4px; }
+.result.empty { border-style: dashed; text-align: center; padding: 45px 24px; }
+.result.attack { border-color: var(--danger); }
+.result.benign { border-color: var(--accent); }
+.decision { display: flex; align-items: center; gap: 18px; }
+.badge { border-radius: 999px; font-size: 13px; font-weight: 800; letter-spacing: .08em; padding: 8px 12px; text-transform: uppercase; }
+.badge.attack { background: rgba(255,119,133,.15); color: var(--danger); }
+.badge.benign { background: rgba(103,232,194,.15); color: var(--accent); }
+.probability { color: var(--muted); margin-left: auto; text-align: right; }
+.probability strong { color: var(--text); display: block; font-size: 27px; }
+.bar { background: #26314c; border-radius: 99px; height: 8px; margin: 20px 0; overflow: hidden; }
+.bar span { background: var(--danger); display: block; height: 100%; transition: width .3s ease; }
+.bar span.benign { background: var(--accent); }
+.reasons { margin: 0; padding-left: 20px; color: #c5cde0; }
+.reasons li { margin: 7px 0; }
+.values-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; margin-top: 20px; }
+.value { background: #10172a; border: 1px solid #202b46; border-radius: 9px; padding: 9px 11px; }
+.value.hidden-value { display: none; }
+.value small { color: var(--muted); display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.value strong { display: block; font-size: 14px; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; }
+.error { color: var(--danger); }
+.table-wrap { overflow-x: auto; margin-top: 18px; }
+table { border-collapse: collapse; min-width: 780px; width: 100%; }
+th { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-align: left; text-transform: uppercase; }
+th, td { border-bottom: 1px solid #202b46; padding: 11px 12px; white-space: nowrap; }
+td { color: #cbd4e8; }
+td.accuracy { color: var(--accent); font-weight: 800; }
+.table-note { color: var(--muted); font-size: 12px; margin: 16px 0 0; }
+code { color: #c5d0ed; }
+@media (max-width: 760px) {
+  .shell { padding-top: 28px; }
+  .controls, .section-heading { align-items: flex-start; flex-direction: column; }
+  .buttons { justify-content: flex-start; }
+  .probability { margin-left: 0; text-align: left; }
+}
