@@ -16,6 +16,7 @@ env/
 /data/*.csv
 
 # Trained model binaries and other generated binary artifacts
+/artifacts/
 /artifacts/**/*.joblib
 /artifacts/**/*.pkl
 /artifacts/**/*.pickle
